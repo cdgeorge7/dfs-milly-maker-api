@@ -1,14 +1,14 @@
 const AWS = require("aws-sdk");
 AWS.config.update({ region: "us_west-2", endpoint: "http://localhost:8000" });
 
-const fetchUsernameFromDB = (week_year, username) => {
+const fetchUsernameFromDB = (week_year, username_q) => {
   const docClient = new AWS.DynamoDB.DocumentClient();
   const table = "MillyMakerUsernames";
   const params = {
     TableName: table,
     Key: {
       week_year: week_year,
-      username: username
+      username_q: username_q
     }
   };
 
