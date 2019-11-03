@@ -1,16 +1,13 @@
 const express = require("express");
 const lineupsController = require("../controllers/lineups.controller");
+const usernameController = require("../controllers/usernames.controller");
 
 const router = express.Router();
 
 router.get("/lineups", lineupsController.getLineups);
 
-router.get("/usernames", (req, res) => {
-  return res.send("usernames");
-});
+//router.get("/username", usernameController.getUsername);
 
-router.get("/usernames/:username", (req, res) => {
-  return res.send(`Data for ${req.params.username}`);
-});
+router.get("/username/:username", usernameController.getUsername);
 
 module.exports = router;

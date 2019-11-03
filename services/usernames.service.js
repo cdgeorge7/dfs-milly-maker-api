@@ -1,14 +1,14 @@
 // data access
-const { fetchUsernamesFromDB } = require("../db/usernames.db");
+const { fetchUsernameFromDB } = require("../db/usernames.db");
 
-const fetchUsernamesService = async (year, week, since) => {
+const fetchUsernameService = (week_year, username) => {
   try {
-    return await fetchUsernamesFromDB(year, week, since);
+    return fetchUsernameFromDB(week_year, username);
   } catch (e) {
     throw new Error(e.message);
   }
 };
 
 module.exports = {
-  fetchUsernamesService
+  fetchUsernameService
 };
