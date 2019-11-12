@@ -1,14 +1,26 @@
 // data access
-const { fetchUsernameFromDB } = require("../db/usernames.db");
+const {
+  fetchUsernameDataFromDB,
+  fetchUsernameListFromDB
+} = require("../db/usernames.db");
 
-const fetchUsernameService = (week_year, username) => {
+const fetchUsernameDataService = (weekYear, username) => {
   try {
-    return fetchUsernameFromDB(week_year, username);
+    return fetchUsernameDataFromDB(weekYear, username);
+  } catch (e) {
+    throw new Error(e.message);
+  }
+};
+
+const fetchUsernameListService = (weekYear, query) => {
+  try {
+    return fetchUsernameListFromDB(weekYear, query);
   } catch (e) {
     throw new Error(e.message);
   }
 };
 
 module.exports = {
-  fetchUsernameService
+  fetchUsernameDataService,
+  fetchUsernameListService
 };
