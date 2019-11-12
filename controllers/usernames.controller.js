@@ -4,7 +4,7 @@ const { fetchUsernameService } = require("../services/usernames.service");
 const getUsername = (req, res, next) => {
   fetchUsernameService(
     req.query.week + "_" + req.query.year,
-    req.params.username
+    req.params.username.toLowerCase()
   )
     .then(data => {
       //console.log(data);
