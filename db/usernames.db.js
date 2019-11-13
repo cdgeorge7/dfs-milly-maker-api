@@ -1,6 +1,6 @@
 const AWS = require("aws-sdk");
-AWS.config.update({ region: "us_west-2", endpoint: "http://localhost:8000" });
-//AWS.config.update({ region: "us-east-2" });
+//AWS.config.update({ region: "us_west-2", endpoint: "http://localhost:8000" });
+AWS.config.update({ region: "us-east-2" });
 
 const fetchUsernameDataFromDB = (weekYear, usernameQ) => {
   const docClient = new AWS.DynamoDB.DocumentClient();
@@ -14,18 +14,24 @@ const fetchUsernameDataFromDB = (weekYear, usernameQ) => {
     }
   };
 
-  return docClient
-    .get(params, (err, data) => {
+  let promise = new Promise((resolve, reject) => {
+    return docClient.get(params, (err, data) => {
       if (err) {
-        console.error(
-          "Unable to read item. Error JSON: ",
-          JSON.stringify(err, null, 2)
-        );
+        reject(err);
+        // console.error(
+        //   "Unable to read item. Error JSON: ",
+        //   JSON.stringify(err, null, 2)
+        // );
       } else {
-        return data;
+        resolve(data);
+        // console.log("oooooh");
+        // console.log(data);
+        // return data;
       }
-    })
-    .promise();
+    });
+    //.promise();
+  });
+  return promise;
 };
 
 const fetchUsernameListFromDB = (weekYear, query) => {
@@ -41,7 +47,7 @@ const fetchUsernameListFromDB = (weekYear, query) => {
     AttributeValueList: "username_q",
     KeyConditionExpression:
       "week_year = :weekYear AND begins_with(username_q,:q)",
-    ProjectionExpression: "username"
+    ProjectionExpression: "username,profit,cash_pct"
   };
 
   return docClient
